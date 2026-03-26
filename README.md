@@ -38,13 +38,18 @@ Student academic performance is influenced by factors beyond classroom instructi
 linear_regression_model/
 ├── README.md
 ├── summative/
-│   └── linear_regression/
-│       ├── multivariate.ipynb       <- Main notebook (EDA + all 3 models)
-│       ├── predict.py               <- Standalone prediction script
-│       ├── best_model.pkl           <- Saved best-performing model
-│       └── scaler.pkl               <- Saved StandardScaler
-├── API/                             <- Reserved for Task 2
-└── FlutterApp/                      <- Reserved for Task 3
+│   ├── linear_regression/
+│   │   ├── multivariate.ipynb       <- Main notebook (EDA + all 3 models)
+│   │   ├── predict.py               <- Standalone prediction script
+│   │   ├── best_model.pkl           <- Saved best-performing model
+│   │   └── scaler.pkl               <- Saved StandardScaler
+│   ├── API/
+│   │   ├── prediction.py            <- FastAPI app
+│   │   ├── requirements.txt         <- Python dependencies
+│   │   ├── best_model.pkl           <- Model used by API
+│   │   └── scaler.pkl               <- Scaler used by API
+│   └── FlutterApp/
+│       └── student_score_predictor/ <- Flutter mobile/desktop app
 ```
 
 ## Methodology
@@ -74,7 +79,17 @@ linear_regression_model/
 - All three models evaluated using RMSE and R2 Score on the test set
 - The model with the lowest RMSE was saved as best_model.pkl
 
-## How to Run
+## API
+
+**Live Swagger UI:** https://student-math-predictor-f5kr.onrender.com/docs
+
+**Prediction Endpoint:** POST https://student-math-predictor-f5kr.onrender.com/predict
+
+**Retraining Endpoint:** POST https://student-math-predictor-f5kr.onrender.com/retrain
+
+> Note: The API is hosted on Render free tier. If the first request is slow, wait 30 seconds for the instance to wake up then try again.
+
+## How to Run the Notebook
 
 **Install dependencies:**
 ```bash
@@ -100,6 +115,28 @@ Input sample  : {'Gender': 1, 'ParentEduc': 3, ...}
 Predicted Math Score: 75.54
 ```
 
+## How to Run the Flutter App
+
+1. Make sure Flutter is installed on your machine
+2. Clone this repository
+3. Navigate to the Flutter app folder:
+```bash
+cd summative/FlutterApp/student_score_predictor
+```
+4. Install dependencies:
+```bash
+flutter pub get
+```
+5. Run on desktop:
+```bash
+flutter run -d windows
+```
+6. Or run on Android by connecting your phone and running:
+```bash
+flutter run
+```
+7. Enter student details in the input fields and press **Predict** to get the predicted Math Score
+
 ## Key Findings
 - ReadingScore and WritingScore are the strongest predictors of MathScore with correlation above 0.80
 - Students who completed test preparation scored 5 to 10 points higher on average in Math
@@ -107,8 +144,15 @@ Predicted Math Score: 75.54
 - NrSiblings had near-zero correlation with scores — retained as a weak but harmless feature
 - Random Forest outperformed both Linear Regression and Decision Tree due to its ensemble nature
 
+## Video Demo
+
+https://youtu.be/ADD_YOUR_LINK_HERE
+
 ## Technologies Used
 - Python 3.10 and Jupyter Notebook
 - pandas, numpy, matplotlib, seaborn
 - scikit-learn: SGDRegressor, DecisionTreeRegressor, RandomForestRegressor, StandardScaler
 - joblib for model persistence
+- FastAPI, Uvicorn, Pydantic for the REST API
+- Flutter and Dart for the mobile/desktop app
+- Render for API hosting
