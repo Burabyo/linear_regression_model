@@ -146,7 +146,7 @@ flutter run
 
 ## Video Demo
 
-https://youtu.be/DD0or-6neu0
+https://youtu.be/aeZQzZDGlnU?si=KXTsx3D77u58pVLc
 
 ## Technologies Used
 - Python 3.10 and Jupyter Notebook
